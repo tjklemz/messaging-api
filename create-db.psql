@@ -1,0 +1,44 @@
+DROP DATABASE IF EXISTS "code_and_coffee";
+CREATE DATABASE "code_and_coffee";
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."users";
+CREATE TABLE "public"."users" (
+  "user_id" uuid NOT NULL,
+  "name" varchar(255) COLLATE "pg_catalog"."default",
+  "password" varchar(255) COLLATE "pg_catalog"."default"
+)
+;
+
+-- ----------------------------
+-- Primary Key structure for table users
+-- ----------------------------
+ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("user_id");
+
+-- ----------------------------
+-- Table structure for messages
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."messages";
+CREATE TABLE "public"."messages" (
+  "message_id" uuid NOT NULL,
+  "user_id" uuid,
+  "message" varchar(255) COLLATE "pg_catalog"."default",
+  "timestamp" time(6)
+)
+;
+
+-- ----------------------------
+-- Primary Key structure for table messages
+-- ----------------------------
+ALTER TABLE "public"."messages"
+  ADD CONSTRAINT "messages_pkey" PRIMARY KEY ("message_id");
+
+-- ----------------------------
+-- Foreign Keys structure for table messages
+-- ----------------------------
+ALTER TABLE "public"."messages"
+  ADD CONSTRAINT "user_id_FK" FOREIGN KEY ("user_id")
+  REFERENCES "public"."users" ("user_id")
+  ON DELETE NO ACTION ON UPDATE NO ACTION;
